@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "mugohanchat",
+    "name": "Mugohan Chat",
     "slug": "mugohanchat",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,12 +15,21 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.mugohan.mugohanchat",
+      "buildNumber": "1.0.0",
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "The app accesses to photo library to upload your profile photo when you are signing up or updating the profile."
+      }
     },
     "android": {
+      "package": "com.mugohan.mugohanchat",
+      "versionCode": 1,
+      "permissions": ["CAMERA"],
+      "icon": "./assets/android-icon.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#1277cb",
+        "foregroundImage": "./assets/android-icon.png"
       }
     },
     "web": {

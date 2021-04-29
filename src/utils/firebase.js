@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import { useRef } from 'react';
+import 'firebase/firestore';
 import config from '../../firebase.json';
 
 const app = firebase.initializeApp(config);
@@ -47,4 +47,26 @@ export const signup = async ({ email, password, name, photoUrl }) => {
 
 export const logout = async () => {
   return await Auth.signOut();
+};
+
+export const getCurrentUser = () => {
+  const { uid, displayName, email, photoURL } = Auth.currentUser;
+  return { uid, name: displayName, email, photoUrl: photoURL };
+};
+
+export const updateUserPhoto = async photoUrl => {
+  const user = Auth.currentUser;
+  const storageUrl = photoUrl.startsWith('https')
+    ? photoUrl
+    : await uploadImage(photoUrl);
+  await user.updateProfile({ photoUrl: storageUrl });
+  return { name: user.displayName, email: user.email, photoUrl: user.photoURL };
+};
+
+export const DB = firebase.firestore();
+
+export const createMessage = async ({ message }) => {
+  return await DB.collection('messages')
+    .doc(message._id)
+    .set({ ...message, createdAt: Date.now() });
 };

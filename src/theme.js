@@ -23,6 +23,7 @@ export const theme = {
   label: colors.grey_4,
   inputPlaceholder: colors.grey_3,
   inputBorder: colors.grey_6,
+  inputDisabledBackground: colors.grey_1,
   buttonBackground: colors.blue,
   buttonTitle: colors.white,
   buttonUnfilledTitle: colors.blue,
@@ -34,4 +35,7 @@ export const theme = {
 
   spinnerBackground: colors.black,
   spinnerIndicator: colors.white,
+
+  sendButtonActivate: colors.blue,
+  sendButtonInactivate: colors.grey3,
 };
