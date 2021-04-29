@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Navigation from './navigations';
 import { images } from './utils/images';
-import { ProgressProvider } from './contexts';
+import { ProgressProvider, UserProvider } from './contexts';
 
 LogBox.ignoreLogs(['Remote debugger']);
 
@@ -40,10 +40,12 @@ const App = () => {
 
   return isReady ? (
     <ThemeProvider theme={theme}>
-      <ProgressProvider>
-        <StatusBar barStyle="dark-content" />
-        <Navigation />
-      </ProgressProvider>
+      <UserProvider>
+        <ProgressProvider>
+          <StatusBar barStyle="dark-content" />
+          <Navigation />
+        </ProgressProvider>
+      </UserProvider>
     </ThemeProvider>
   ) : (
     <AppLoading

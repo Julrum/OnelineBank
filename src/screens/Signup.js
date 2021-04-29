@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ProgressContext } from '../contexts';
+import { ProgressContext, UserContext } from '../contexts';
 import { Image, Input, Button } from '../components';
 import { validateEmail, removeWhitespace } from '../utils/common';
 import { images } from '../utils/images';
@@ -33,6 +33,7 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(true);
   const { spinner } = useContext(ProgressContext);
+  const { dispatch } = useContext(UserContext);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -70,7 +71,7 @@ const Signup = () => {
       spinner.start();
       const user = await signup({ email, password, name, photoUrl });
       console.log(user);
-      Alert.alert('Signup Success', user.email);
+      dispatch(user);
     } catch (e) {
       Alert.alert('Signup Error', e.message);
     } finally {

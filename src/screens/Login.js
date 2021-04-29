@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ProgressContext } from '../contexts';
+import { ProgressContext, UserContext } from '../contexts';
 import { Image, Input, Button } from '../components';
 import { images } from '../utils/images';
 import { validateEmail, removeWhitespace } from '../utils/common';
@@ -36,6 +36,7 @@ const Login = ({ navigation }) => {
   const passwordRef = useRef();
   const insets = useSafeAreaInsets();
   const { spinner } = useContext(ProgressContext);
+  const { dispatch } = useContext(UserContext);
 
   useEffect(() => {
     setDisabled(!(email && password && !errorMessage));
@@ -56,7 +57,7 @@ const Login = ({ navigation }) => {
     try {
       spinner.start();
       const user = await login({ email, password });
-      Alert.alert('Login Success', user.email);
+      dispatch(user);
     } catch (e) {
       Alert.alert('Login Error', e.message);
     } finally {
