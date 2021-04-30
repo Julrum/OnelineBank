@@ -102,7 +102,7 @@ const Channel = ({ navigation }) => {
   const findAccount = text => {
     console.log(text);
     const list = [];
-    setInfom([]);
+    setInfo([]);
     if (validateAccount(text)) {
       console.log(returnAccount(text));
       list.push(returnAccount(text));
@@ -117,14 +117,12 @@ const Channel = ({ navigation }) => {
       console.log('error2');
       list.push(null);
     }
-    setInfom(list);
+    setInfo(list);
     if (info.current[0] !== null && info.current[1] !== null) {
       console.log(info.current[0], info.current[1]);
-      setTextss(
-        `${info.current[0]}에게 ${info.current[1]}원을 송금하겠습니다.`
-      );
+      setTexts(`${info.current[0]}에게 ${info.current[1]}원을 송금하겠습니다.`);
     } else {
-      setTextss('명령을 알아듣지 못했어요.');
+      setTexts('명령을 알아듣지 못했어요.');
     }
     console.log(texts.current);
   };
