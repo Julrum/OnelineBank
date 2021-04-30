@@ -90,8 +90,7 @@ export const createMessage = async ({ message }) => {
     .set({ ...message, createdAt: Date.now() });
 };
 
-export const createBotMesage = async ({ message }) => {
-  console.log(message);
+export const createBotMessage = async ({ message }) => {
   return await DB.collection('messages')
     .doc(message._id)
     .set({ ...message, createdAt: Date.now() });

@@ -68,9 +68,7 @@ const Image = ({ url, imageStyle, rounded, showButton, onChangeImage }) => {
         aspect: [1, 1],
         quality: 1,
       });
-      console.log('ad');
       if (!result.cancelled) {
-        console.log('df');
         onChangeImage(result.uri);
       }
     } catch (e) {

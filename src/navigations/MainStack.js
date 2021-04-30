@@ -11,7 +11,7 @@ const MainStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="Main"
+      initialRouteName="Chat"
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: theme.headerTintColor,
@@ -19,7 +19,7 @@ const MainStack = () => {
         headerBackTitleVisible: false,
       }}
     >
-      <Stack.Screen name="Main" component={MainTab} />
+      <Stack.Screen name="Chat" component={MainTab} />
       <Stack.Screen name="Channel" component={Channel} />
       <Stack.Screen name="Account Creation" component={AccountCreation} />
       <Stack.Screen name="Account List" component={AccountList} />
