@@ -38,4 +38,9 @@ export const theme = {
 
   sendButtonActivate: colors.blue,
   sendButtonInactivate: colors.grey3,
+
+  listBorder: colors.grey_5,
+  listTime: colors.grey_3,
+  listAccount: colors.grey_3,
+  listIcon: colors.black,
 };

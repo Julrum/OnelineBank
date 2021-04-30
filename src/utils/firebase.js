@@ -45,13 +45,32 @@ export const signup = async ({ email, password, name, photoUrl }) => {
   return user;
 };
 
+export const createUsers = async ({ email, account, name }) => {
+  const newInformationRef = DB.collection('information').doc();
+  const id = newInformationRef.id;
+  const newInformation = {
+    id,
+    name,
+    email,
+    account,
+    createdAt: Date.now(),
+  };
+  await newInformationRef.set(newInformation);
+  return id;
+};
+
 export const logout = async () => {
   return await Auth.signOut();
 };
 
 export const getCurrentUser = () => {
   const { uid, displayName, email, photoURL } = Auth.currentUser;
-  return { uid, name: displayName, email, photoUrl: photoURL };
+  return {
+    uid,
+    name: displayName,
+    email,
+    photoUrl: photoURL,
+  };
 };
 
 export const updateUserPhoto = async photoUrl => {
@@ -69,4 +88,23 @@ export const createMessage = async ({ message }) => {
   return await DB.collection('messages')
     .doc(message._id)
     .set({ ...message, createdAt: Date.now() });
+};
+
+export const createBotMesage = async ({ message }) => {
+  console.log(message);
+  return await DB.collection('messages')
+    .doc(message._id)
+    .set({ ...message, createdAt: Date.now() });
+};
+
+export const createAccount = async ({ name, account }) => {
+  const newAccountRef = DB.collection('accounts').doc();
+  const id = newAccountRef.id;
+  const newAccount = {
+    id,
+    name,
+    account,
+  };
+  await newAccountRef.set(newAccount);
+  return id;
 };

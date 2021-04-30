@@ -4,9 +4,13 @@ import styled from 'styled-components/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ProgressContext, UserContext } from '../contexts';
 import { Image, Input, Button } from '../components';
-import { validateEmail, removeWhitespace } from '../utils/common';
+import {
+  validateEmail,
+  validateAccount,
+  removeWhitespace,
+} from '../utils/common';
 import { images } from '../utils/images';
-import { signup } from '../utils/firebase';
+import { signup, createUsers } from '../utils/firebase';
 
 const Container = styled.View`
   flex: 1;
@@ -27,6 +31,7 @@ const ErrorText = styled.Text`
 const Signup = () => {
   const [photoUrl, setPhotoUrl] = useState(images.photo);
   const [name, setName] = useState('');
+  const [account, setAccount] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -35,6 +40,7 @@ const Signup = () => {
   const { spinner } = useContext(ProgressContext);
   const { dispatch } = useContext(UserContext);
 
+  const accountRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -45,6 +51,8 @@ const Signup = () => {
       let _errorMessage = '';
       if (!name) {
         _errorMessage = 'Please enter your name.';
+      } else if (validateAccount(account)) {
+        _errorMessage = 'Pleaase verify your account';
       } else if (!validateEmail(email)) {
         _errorMessage = 'Please verify your email.';
       } else if (password.length < 6) {
@@ -58,13 +66,20 @@ const Signup = () => {
     } else {
       didMountRef.current = true;
     }
-  }, [name, email, password, passwordConfirm]);
+  }, [name, email, account, password, passwordConfirm]);
 
   useEffect(() => {
     setDisabled(
-      !(name && email && password && passwordConfirm && !errorMessage)
+      !(
+        name &&
+        email &&
+        account &&
+        password &&
+        passwordConfirm &&
+        !errorMessage
+      )
     );
-  }, [name, email, password, passwordConfirm, errorMessage]);
+  }, [name, email, account, password, passwordConfirm, errorMessage]);
 
   const _handleSignupButtonPress = async () => {
     try {
@@ -72,6 +87,7 @@ const Signup = () => {
       const user = await signup({ email, password, name, photoUrl });
       console.log(user);
       dispatch(user);
+      const id = await createUsers({ email, account, name });
     } catch (e) {
       Alert.alert('Signup Error', e.message);
     } finally {
@@ -94,10 +110,19 @@ const Signup = () => {
           onChangeText={text => setName(text)}
           onSubmitEditing={() => {
             setName(name.trim());
-            emailRef.current.focus();
+            accountRef.current.focus();
           }}
           onBlur={() => setName(name.trim())}
           placeholder="Name"
+          returnKeyType="next"
+        />
+        <Input
+          ref={accountRef}
+          label="계좌번호"
+          value={account}
+          onChangeText={text => setAccount(removeWhitespace(text))}
+          onSubmitEditing={() => emailRef.current.focus()}
+          placeholder="Account"
           returnKeyType="next"
         />
         <Input

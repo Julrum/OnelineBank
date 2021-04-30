@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Profile, Channel } from '../screens';
+import { Profile, Channel, AccountList } from '../screens';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ThemeContext } from 'styled-components/native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
@@ -23,7 +23,18 @@ const MainTab = ({ navigation, route }) => {
 
   useEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    navigation.setOptions({ headerTitle: routeName });
+    navigation.setOptions({
+      headerTitle: routeName,
+      headerRight: () =>
+        routeName === 'Account' && (
+          <MaterialIcons
+            name="add"
+            size={26}
+            style={{ margin: 10 }}
+            onPress={() => navigation.navigate('Account Creation')}
+          />
+        ),
+    });
   }, [route]);
 
   return (
@@ -41,6 +52,17 @@ const MainTab = ({ navigation, route }) => {
             TabBarIcon({
               focused,
               name: focused ? 'chat-bubble' : 'chat-bubble-outline',
+            }),
+        }}
+      />
+      <Tab.Screen
+        name="Account"
+        component={AccountList}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            TabBarIcon({
+              focused,
+              name: focused ? 'people' : 'people-outline',
             }),
         }}
       />

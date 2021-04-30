@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Channel } from '../screens';
+import { Channel, AccountCreation, AccountList } from '../screens';
 import MainTab from './MainTab';
 
 const Stack = createStackNavigator();
@@ -21,6 +21,8 @@ const MainStack = () => {
     >
       <Stack.Screen name="Main" component={MainTab} />
       <Stack.Screen name="Channel" component={Channel} />
+      <Stack.Screen name="Account Creation" component={AccountCreation} />
+      <Stack.Screen name="Account List" component={AccountList} />
     </Stack.Navigator>
   );
 };
