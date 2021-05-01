@@ -45,18 +45,27 @@ export const signup = async ({ email, password, name, photoUrl }) => {
   return user;
 };
 
-export const createUsers = async ({ email, account, name }) => {
+export const createUsers = async ({ email, account, name, id }) => {
   const newInformationRef = DB.collection('information').doc();
-  const id = newInformationRef.id;
   const newInformation = {
-    id,
-    name,
-    email,
-    account,
+    id: id,
+    name: name,
+    email: email,
+    account: account,
     createdAt: Date.now(),
   };
   await newInformationRef.set(newInformation);
-  return id;
+};
+
+export const createBots = async ({ uid }) => {
+  const newInformationRef = DB.collection('bots').doc();
+  const newInformation = {
+    id: `bots${uid}`,
+    name: 'Bot',
+    uid: uid,
+    createdAt: Date.now(),
+  };
+  await newInformationRef.set(newInformation);
 };
 
 export const logout = async () => {
@@ -78,19 +87,13 @@ export const updateUserPhoto = async photoUrl => {
   const storageUrl = photoUrl.startsWith('https')
     ? photoUrl
     : await uploadImage(photoUrl);
-  await user.updateProfile({ photoUrl: storageUrl });
+  await user.updateProfile({ photoURL: storageUrl });
   return { name: user.displayName, email: user.email, photoUrl: user.photoURL };
 };
 
 export const DB = firebase.firestore();
 
 export const createMessage = async ({ message }) => {
-  return await DB.collection('messages')
-    .doc(message._id)
-    .set({ ...message, createdAt: Date.now() });
-};
-
-export const createBotMessage = async ({ message }) => {
   return await DB.collection('messages')
     .doc(message._id)
     .set({ ...message, createdAt: Date.now() });

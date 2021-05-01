@@ -10,7 +10,7 @@ import {
   removeWhitespace,
 } from '../utils/common';
 import { images } from '../utils/images';
-import { signup, createUsers } from '../utils/firebase';
+import { signup, signBot, createUsers, createBots } from '../utils/firebase';
 
 const Container = styled.View`
   flex: 1;
@@ -85,9 +85,13 @@ const Signup = () => {
     try {
       spinner.start();
       const user = await signup({ email, password, name, photoUrl });
-      console.log(user);
       dispatch(user);
-      const id = await createUsers({ email, account, name });
+      if (user) {
+        await createUsers({ email, account, name, id: user.uid });
+        await createBots({ uid: user.uid });
+      } else {
+        console.log('build failed!');
+      }
     } catch (e) {
       Alert.alert('Signup Error', e.message);
     } finally {

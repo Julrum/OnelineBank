@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { Alert } from 'react-native';
 import axios from 'axios';
-import { DB, createMessage, createBotMessage } from '../utils/firebase';
+import { DB, createMessage, getCurrentUser } from '../utils/firebase';
 import {
   returnAccount,
   returnMoney,
@@ -21,6 +21,7 @@ import { Chat } from '../components';
 const Channel = ({ navigation }) => {
   const { spinner } = useContext(ProgressContext);
   const [messages, setMessages] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const progress = useRef(false);
   const setProgress = n => {
     progress.current = n;
@@ -41,13 +42,15 @@ const Channel = ({ navigation }) => {
   const setStatus = n => {
     status.current = n;
   };
+  const { uid, name, photoUrl } = getCurrentUser();
+  const botId = `bots${uid}`;
 
   const bot = comment => {
     return {
       _id: makeId(36),
       text: comment,
       user: {
-        _id: 'eKaVi4APosTLlKN7EDXdvXUIYAD2',
+        _id: botId,
         avatar:
           'https://firebasestorage.googleapis.com/v0/b/react-native-chat-d43a3.appspot.com/o/profile%2FeKaVi4APosTLlKN7EDXdvXUIYAD2%2Fphoto.png?alt=media&token=4925aa6b-6085-4404-9f67-30f564adff03',
         name: 'Bot',
@@ -65,49 +68,57 @@ const Channel = ({ navigation }) => {
       .onSnapshot(snapshot => {
         const list = [];
         snapshot.forEach(doc => {
-          list.push(doc.data());
+          if (doc.data().user._id === uid || doc.data().user._id === botId) {
+            list.push(doc.data());
+          }
         });
         setMessages(list);
       });
     return () => unsubscirbe();
   }, []);
 
+  useEffect(() => {
+    const unsubscirbe = DB.collection('accounts')
+      .orderBy('name', 'asc')
+      .onSnapshot(snapshot => {
+        const list = [];
+        snapshot.forEach(doc => {
+          list.push(doc.data());
+        });
+        setAccounts(list);
+      });
+    return () => unsubscirbe();
+  }, []);
+
   const findAccount = text => {
-    console.log(text);
     const list = [];
     setInfo([]);
     if (validateAccount(text)) {
       console.log(returnAccount(text));
       list.push(returnAccount(text));
     } else {
-      console.log('error1');
       list.push(null);
     }
     if (validateMoney(text)) {
       console.log(returnMoney(text));
       list.push(returnMoney(text));
     } else {
-      console.log('error2');
       list.push(null);
     }
     setInfo(list);
     if (info.current[0] !== null && info.current[1] !== null) {
-      console.log(info.current[0], info.current[1]);
       setTexts(`${info.current[0]}에게 ${info.current[1]}원을 송금하겠습니다.`);
       setProgress(true);
     } else {
       setTexts('명령을 알아듣지 못했어요.');
       setProgress(false);
     }
-    console.log(texts.current);
   };
 
-  const findAnswer = text => {
-    console.log(text);
+  const findAnswer = async text => {
     if (text === '네' || text === '예') {
       setProgress(false);
-      setTexts('이체를 진행합니다.');
-      transfer();
+      await transfer();
       if (status.current === 200) {
         setTexts(
           `이체를 완료하였습니다.\n예금주: ${data.current.dataBody.OWAC_FNM}\n수취인: ${data.current.dataBody.RNPE_FNM}\n잔액: ${data.current.dataBody.BFTR_AF_BAL}\n수수료금액: ${data.current.dataBody.FEE_Am}`
@@ -149,7 +160,6 @@ const Channel = ({ navigation }) => {
         },
         { headers: headers }
       );
-      console.log(response.data);
       setData(response.data);
       setStatus(response.status);
     } catch (e) {
@@ -164,10 +174,10 @@ const Channel = ({ navigation }) => {
       await createMessage({ message: newMessage });
       if (!progress.current) {
         await findAccount(newMessage.text);
-        await createBotMessage({ message: bot(texts.current) });
+        await createMessage({ message: bot(texts.current) });
       } else {
         await findAnswer(newMessage.text);
-        await createBotMessage({ message: bot(texts.current) });
+        await createMessage({ message: bot(texts.current) });
       }
     } catch (e) {
       Alert.alert('Send Message Error', e.message);
