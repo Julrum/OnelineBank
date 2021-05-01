@@ -14,3 +14,5 @@ web-build/
 
 # firebase
 firebase.json
+
+environment.js

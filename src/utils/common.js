@@ -1,3 +1,5 @@
+import { bankCode } from '../utils/woori';
+
 export const validateEmail = email => {
   const regex = /^[0-9?A-z0-9?]+(\.)?[0-9?A-z0-9?]+@[0-9?A-z]+\.[A-z]{2}.?[A-z]{0,3}$/;
   return regex.test(email);
@@ -23,6 +25,21 @@ export const returnMoney = money => {
   return money.match(regex)[0];
 };
 
+export const returnName = name => {
+  const regex = /[가-힣]+(?=에게)/;
+  return name.match(regex)[0];
+};
+
+export const validateBankCode = code => {
+  const list = [];
+  bankCode.forEach(item => {
+    if (removeWhitespace(code).match(item.name)) {
+      list.push(item);
+    }
+  });
+  return list[0] && list[0];
+};
+
 export const removeWhitespace = text => {
   const regex = /\s/g;
   return text.replace(regex, '');
@@ -40,3 +57,5 @@ export const makeId = length => {
   }
   return result.join('');
 };
+
+export const particle = ['/[가-힣]+(?=에게)/', '/[가-힣]+(?=한테)/'];
