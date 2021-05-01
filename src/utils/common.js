@@ -25,6 +25,10 @@ export const returnMoney = money => {
   return money.match(regex)[0];
 };
 
+export const validateName = name => {
+  const regex = /[가-힣]+(?=에게)/;
+  return regex.test(name);
+};
 export const returnName = name => {
   const regex = /[가-힣]+(?=에게)/;
   return name.match(regex)[0];

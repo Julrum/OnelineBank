@@ -15,6 +15,8 @@ import {
   validateAccount,
   validateMoney,
   validateBankCode,
+  returnName,
+  validateName,
 } from '../utils/common';
 import { ProgressContext } from '../contexts';
 import { Chat } from '../components';
@@ -103,37 +105,44 @@ const Channel = ({ navigation }) => {
 
   const findAccount = text => {
     const list = [];
+    let message = '';
     setInfo([]);
-    if (validateMoney(text)) {
-      console.log(returnMoney(text));
-      list.push(returnMoney(text));
-    } else {
-      list.push(null);
-      setTexts('금액을 인식하지 못했어요.');
-    }
-    if (validateAccount(text)) {
-      console.log(returnAccount(text));
-      list.push(returnAccount(text));
-    } else {
-      list.push(null);
-      setTexts('계좌를 인식하지 못했어요.\n-를 빼고 입력해보세요.');
-    }
-    if (validateBankCode(text)) {
+    if (validateName(text)) {
+      console.log(returnName(text));
+      list.push(returnName(text));
+      message += `${returnName(text)}에게`;
+      console.log(message);
+    } else if (validateBankCode(text)) {
       list.push(validateBankCode(text).code);
-      list.push(validateBankCode(text).name);
+      message += validateBankCode(text).name;
+      if (validateAccount(text)) {
+        console.log(returnAccount(text));
+        list.push(returnAccount(text));
+        message += ` ${returnAccount(text)}에게`;
+      } else {
+        list.push(null);
+        setTexts('계좌를 인식하지 못했어요.\n-를 빼고 입력해보세요.');
+      }
     } else {
       list.push(null);
       setTexts('은행을 인식하지 못했어요.');
     }
+    if (validateMoney(text)) {
+      console.log(returnMoney(text));
+      list.push(returnMoney(text));
+      message += ` ${returnMoney(text)}원을 보내시겠습니까?`;
+    } else {
+      list.push(null);
+      setTexts('금액을 인식하지 못했어요.');
+    }
+
     setInfo(list);
     if (
       info.current[0] !== null &&
       info.current[1] !== null &&
       info.current[2] !== null
     ) {
-      setTexts(
-        `${info.current[3]} ${info.current[1]}에게 ${info.current[0]}원을 송금하겠습니까?`
-      );
+      setTexts(message);
       setProgress(true);
     } else {
       setProgress(false);
