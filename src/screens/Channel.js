@@ -46,7 +46,7 @@ const Channel = ({ navigation }) => {
   const setStatus = n => {
     status.current = n;
   };
-  const { uid, name, photoUrl } = getCurrentUser();
+  const { uid } = getCurrentUser();
   const botId = `bots${uid}`;
 
   const bot = comment => {

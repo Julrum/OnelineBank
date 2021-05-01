@@ -51,8 +51,8 @@ const Signup = () => {
       let _errorMessage = '';
       if (!name) {
         _errorMessage = 'Please enter your name.';
-      } else if (validateAccount(account)) {
-        _errorMessage = 'Pleaase verify your account';
+      } else if (!validateAccount(account)) {
+        _errorMessage = 'Pleaase verify your account.';
       } else if (!validateEmail(email)) {
         _errorMessage = 'Please verify your email.';
       } else if (password.length < 6) {

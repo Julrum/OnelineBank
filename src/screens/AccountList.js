@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
-import { DB } from '../utils/firebase';
+import { DB, getCurrentUser } from '../utils/firebase';
 
 const Container = styled.View`
   flex: 1;
@@ -32,16 +32,17 @@ for (let idx = 0; idx < 1000; idx++) {
   accounts.push({
     id: idx,
     name: `name ${idx}`,
+    bank: `bank ${idx}`,
     account: `account ${idx}`,
   });
 }
 
-const Item = React.memo(({ item: { name, account } }) => {
+const Item = React.memo(({ item: { name, bank, account } }) => {
   return (
     <ItemContainer>
       <ItemTextContainer>
         <ItemName>{name}</ItemName>
-        <ItemAccount>{account}</ItemAccount>
+        <ItemAccount>{`${bank} ${account}`}</ItemAccount>
       </ItemTextContainer>
     </ItemContainer>
   );
@@ -49,6 +50,7 @@ const Item = React.memo(({ item: { name, account } }) => {
 
 const AccountList = ({ navigation }) => {
   const [accounts, setAccounts] = useState([]);
+  const { uid } = getCurrentUser();
 
   useEffect(() => {
     const unsubscirbe = DB.collection('accounts')
@@ -56,7 +58,9 @@ const AccountList = ({ navigation }) => {
       .onSnapshot(snapshot => {
         const list = [];
         snapshot.forEach(doc => {
-          list.push(doc.data());
+          if (doc.data().uid === uid) {
+            list.push(doc.data());
+          }
         });
         setAccounts(list);
       });

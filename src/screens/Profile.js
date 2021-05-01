@@ -1,13 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled, { ThemeContext } from 'styled-components/native';
 import { Button, Image, Input } from '../components';
-import {
-  logout,
-  getCurrentUser,
-  updateUserPhoto,
-  DB,
-  getInformation,
-} from '../utils/firebase';
+import { logout, getCurrentUser, updateUserPhoto, DB } from '../utils/firebase';
 import { ProgressContext, UserContext } from '../contexts';
 import { Alert } from 'react-native';
 
@@ -73,6 +67,7 @@ const Profile = () => {
       />
       <Input label="Name" value={user.name} disabled />
       <Input label="Email" value={user.email} disabled />
+      <Input label="Account" value={information.account} disabled />
       <Button
         title="logout"
         onPress={_handleLogoutButtonPress}

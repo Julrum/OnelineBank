@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Alert } from 'react-native';
 import { ProgressContext } from '../contexts';
-import { createAccount } from '../utils/firebase';
+import { createAccount, getCurrentUser } from '../utils/firebase';
 import styled from 'styled-components/native';
 import { Input, Button } from '../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {
+  removeWhitespace,
+  validateAccount,
+  validateBankCode,
+} from '../utils/common';
 
 const Container = styled.View`
   flex: 1;
@@ -25,24 +30,41 @@ const ErrorText = styled.Text`
 const AccountCreation = ({ navigation }) => {
   const { spinner } = useContext(ProgressContext);
   const [name, setName] = useState('');
+  const [bank, setBank] = useState('');
   const [account, setAccount] = useState('');
-  const accountRef = useRef();
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const accountRef = useRef();
+  const bankRef = useRef();
+  const didMountRef = useRef();
+  const { uid } = getCurrentUser();
 
   useEffect(() => {
-    setDisabled(!(name && !errorMessage));
-  }, [name, account, errorMessage]);
+    if (didMountRef.current) {
+      let _errorMessage = '';
+      if (!name) {
+        _errorMessage = 'Please enter name.';
+      } else if (!validateAccount(account)) {
+        _errorMessage = 'Please verify account.';
+      } else if (!validateBankCode(bank)) {
+        _errorMessage = 'Please verify bank name.';
+      } else {
+        _errorMessage = '';
+      }
+      setErrorMessage(_errorMessage);
+    } else {
+      didMountRef.current = true;
+    }
+  }, [name, account, bank]);
 
-  const _handleNameChange = name => {
-    setName(name);
-    setErrorMessage(name.trim() ? '' : 'Please enter the title.');
-  };
+  useEffect(() => {
+    setDisabled(!(name && account && bank && !errorMessage));
+  }, [name, account, bank, errorMessage]);
 
   const _handleCreateButtonPress = async () => {
     try {
       spinner.start();
-      const id = await createAccount({ name, account });
+      await createAccount({ name, bank, account, uid });
       navigation.goBack();
     } catch (e) {
       Alert.alert('Creation Error', e.message);
@@ -60,10 +82,10 @@ const AccountCreation = ({ navigation }) => {
         <Input
           label="Name"
           value={name}
-          onChangeText={_handleNameChange}
+          onChangeText={text => setName(text)}
           onSubmitEditing={() => {
             setName(name.trim());
-            accountRef.current.focus();
+            bankRef.current.focus();
           }}
           onBlur={() => setName(name.trim())}
           placeholder="Name"
@@ -71,8 +93,23 @@ const AccountCreation = ({ navigation }) => {
           maxLength={10}
         />
         <Input
+          ref={bankRef}
+          label="Bank name"
+          value={bank}
+          onChangeText={text => setBank(removeWhitespace(text))}
+          onSubmitEditing={() => {
+            setBank(bank.trim());
+            () => accountRef.current.focus();
+          }}
+          onBlur={() => setBank(bank.trim())}
+          placeholder="Bank name"
+          returnKeyType="next"
+          maxLength={10}
+        />
+        <Input
           ref={accountRef}
           label="Account"
+          value={account}
           onChangeText={text => setAccount(text)}
           onSubmitEditing={() => {
             setAccount(account.trim());

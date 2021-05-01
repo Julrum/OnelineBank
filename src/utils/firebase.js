@@ -99,13 +99,15 @@ export const createMessage = async ({ message }) => {
     .set({ ...message, createdAt: Date.now() });
 };
 
-export const createAccount = async ({ name, account }) => {
+export const createAccount = async ({ name, bank, account, uid }) => {
   const newAccountRef = DB.collection('accounts').doc();
   const id = newAccountRef.id;
   const newAccount = {
     id,
     name,
+    bank,
     account,
+    uid,
   };
   await newAccountRef.set(newAccount);
   return id;
