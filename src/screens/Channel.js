@@ -109,7 +109,6 @@ const Channel = ({ navigation }) => {
     let _message = '';
     setInfo([]);
     if (validateName(text)) {
-      console.log(returnName(text));
       const isThereName = findNameinAccount(returnName(text), accounts, uid);
       if (isThereName[0] !== undefined && isThereName[1] !== undefined) {
         list.push(isThereName[0]);
@@ -119,13 +118,12 @@ const Channel = ({ navigation }) => {
         })에게`;
       } else {
         list.push(null);
-        setTexts('이름을 찾을 수가 없어요.');
+        setTexts('이름을 찾을 수가 없어요.\n주소록에서 새로 추가해주세요.');
       }
     } else if (validateBankCode(text)) {
       list.push(validateBankCode(text).code);
       _message += validateBankCode(text).name;
       if (validateAccount(text)) {
-        console.log(returnAccount(text));
         list.push(returnAccount(text));
         _message += ` ${returnAccount(text)}에게`;
       } else {
@@ -137,14 +135,12 @@ const Channel = ({ navigation }) => {
       setTexts('은행을 인식하지 못했어요.');
     }
     if (validateMoney(text)) {
-      console.log(returnMoney(text));
       list.push(returnMoney(text));
       _message += ` ${returnMoney(text)}원을 보내시겠습니까?`;
     } else {
       list.push(null);
       setTexts('금액을 인식하지 못했어요.');
     }
-    console.log(list);
 
     setInfo(list);
     if (
@@ -160,18 +156,21 @@ const Channel = ({ navigation }) => {
   };
 
   const findAnswer = async text => {
-    if (text === '네' || text === '예' || text === 'ㅇㅇ' || text === '그래') {
+    if (
+      text === '네' ||
+      text === '예' ||
+      text === 'ㅇㅇ' ||
+      text === 'ㅇ' ||
+      text === '그래'
+    ) {
       setProgress(false);
-      console.log(info.current[2]);
       if (info.current[2] === '020') {
-        console.log('rere');
         const response = await transferWoori({
           fromAccount: information.account,
           money: info.current[2],
           toAccount: info.current[1],
           txt: '',
         });
-        console.log(response);
         setStatus(response.status);
         setData(response.data);
       } else {
@@ -184,7 +183,6 @@ const Channel = ({ navigation }) => {
         });
         setStatus(response.status);
         setData(response.data);
-        console.log(response.data);
       }
 
       if (status.current === 200) {
@@ -194,9 +192,17 @@ const Channel = ({ navigation }) => {
       } else {
         setTexts(`${status.current}\n이체에 실패했습니다.`);
       }
-    } else {
-      setProgress(false);
+    } else if (
+      text === '아니오' ||
+      text === 'ㄴㄴ' ||
+      text === 'ㄴ' ||
+      text === '싫어'
+    ) {
       setTexts('이체를 취소합니다.');
+      setProgress(false);
+    } else {
+      setTexts('알아듣지 못했어요. 예/아니오로 대답해주세요.');
+      setProgress(true);
     }
   };
 
@@ -206,8 +212,20 @@ const Channel = ({ navigation }) => {
       spinner.start();
       await createMessage({ message: newMessage });
       if (!progress.current) {
-        await findAccount(newMessage.text);
-        await createMessage({ message: bot(texts.current) });
+        if (newMessage.text === '도움말') {
+          setTexts(
+            '현재 계좌이체 기능이 있습니다.\n(추천 대화: 계좌이체는 어떻게 해?)'
+          );
+          await createMessage({ message: bot(texts.current) });
+        } else if (newMessage.text === '계좌이체는 어떻게 해?') {
+          setTexts(
+            '[은행 계좌번호]/[이름]에게 [이체금액]원 보내줘 라고 문자를 해보세요.'
+          );
+          await createMessage({ message: bot(texts.current) });
+        } else {
+          await findAccount(newMessage.text);
+          await createMessage({ message: bot(texts.current) });
+        }
       } else {
         await findAnswer(newMessage.text);
         await createMessage({ message: bot(texts.current) });
