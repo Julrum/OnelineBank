@@ -45,7 +45,7 @@ const AccountCreation = ({ navigation }) => {
       if (!name) {
         _errorMessage = '이름을 입력해주세요.';
       } else if (!validateAccount(account)) {
-        _errorMessage = '올바른 이메일 형식이 아닙니다.';
+        _errorMessage = '올바른 계좌 형식이 아닙니다.';
       } else if (!validateBankCode(bank)) {
         _errorMessage = '올바른 은행을 입력해주세요.';
       } else {
