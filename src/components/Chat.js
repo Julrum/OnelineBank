@@ -58,7 +58,7 @@ const RenderBubble = props => {
           borderColor: theme.botBubbleBorder,
           backgroundColor: theme.botBubbleBG,
           borderWidth: 2,
-          borderBottomLeftRadius: 0,
+          borderTopLeftRadius: 0,
         },
         right: {
           backgroundColor: theme.bubbleBG,

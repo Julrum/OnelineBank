@@ -15,24 +15,15 @@ function Chat(props) {
           <Path d="M0 0h26v26H0z" />
         </ClipPath>
       </Defs>
-      <G className="prefix__cls-1" clipPath="url(#prefix__a)">
-        <Path className="prefix__cls-5" fill="#fff" d="M0 0h26v26H0z" />
-        <G className="prefix__cls-6" filter="url(#prefix__b)">
-          <G
-            data-name="\uC0AC\uAC01\uD615 7"
-            className="prefix__cls-2"
-            fill="none"
-            stroke="#bcc3c7"
-          >
+      <G data-name="chat \u2013 1" clipPath="url(#prefix__a)">
+        <Path fill="#fff" d="M0 0h26v26H0z" />
+        <G filter="url(#prefix__b)">
+          <G data-name="\uC0AC\uAC01\uD615 7" fill="none" stroke="#bcc3c7">
             <Path
-              className="prefix__cls-3"
-              d="M26 17H4.5A4.5 4.5 0 010 12.5 4.5 4.5 0 014.5 8h17a4.5 4.5 0 014.5 4.5V17z"
+              d="M26 22H9a9 9 0 01-9-9 9 9 0 019-9h8a9 9 0 019 9v9z"
               stroke="none"
             />
-            <Path
-              className="prefix__cls-4"
-              d="M25.484 16.5H4.5a4 4 0 01-4-4h0a4 4 0 014-4h17a4 4 0 014 4v3.984a.016.016 0 01-.016.016z"
-            />
+            <Path d="M25.467 21.5H9A8.5 8.5 0 01.5 13h0A8.5 8.5 0 019 4.5h8a8.5 8.5 0 018.5 8.5v8.467a.033.033 0 01-.033.033z" />
           </G>
         </G>
       </G>

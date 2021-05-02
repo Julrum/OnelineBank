@@ -15,22 +15,20 @@ function ProfileActivity(props) {
           <Path d="M0 0h26v26H0z" />
         </ClipPath>
       </Defs>
-      <G className="prefix__cls-1" clipPath="url(#prefix__a)">
-        <Path className="prefix__cls-3" fill="#fff" d="M0 0h26v26H0z" />
+      <G clipPath="url(#prefix__a)">
+        <Path fill="#fff" d="M0 0h26v26H0z" />
         <Circle
           data-name="\uD0C0\uC6D0 1"
-          className="prefix__cls-2"
           cx={4}
           cy={4}
           r={4}
           transform="translate(9 3.843)"
-          fill="#08090a"
+          fill="#1277cb"
         />
         <Path
           data-name="\uD328\uC2A4 3"
-          className="prefix__cls-2"
           d="M13 10.843a8 8 0 018 8c0 4.418-16 4.418-16 0a8 8 0 018-8z"
-          fill="#08090a"
+          fill="#1277cb"
         />
       </G>
     </Svg>

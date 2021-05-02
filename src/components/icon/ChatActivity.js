@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Svg, { Defs, ClipPath, Path, G } from 'react-native-svg';
-/* SVGR has dropped some elements not supported by react-native-svg: filter */
 
-function SvgComponent(props) {
+function ChatActivity(props) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +20,7 @@ function SvgComponent(props) {
           <Path
             data-name="\uC0AC\uAC01\uD615 7"
             d="M26 22H9a9 9 0 01-9-9 9 9 0 019-9h8a9 9 0 019 9v9z"
-            fill="#08090a"
+            fill="#1277cb"
           />
         </G>
       </G>
@@ -29,4 +28,4 @@ function SvgComponent(props) {
   );
 }
 
-export default SvgComponent;
+export default ChatActivity;
