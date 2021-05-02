@@ -71,6 +71,7 @@ const RenderBubble = props => {
 
 const RenderComposer = props => {
   const theme = useContext(ThemeContext);
+  const padding = Platform.OS === 'android' ? 2 : 8.5;
   return (
     <Composer
       {...props}
@@ -80,19 +81,31 @@ const RenderComposer = props => {
         borderWidth: 1,
         borderRadius: 20,
         borderColor: theme.inputBorderColor,
-        paddingTop: 8.5,
+        paddingTop: padding,
         paddingHorizontal: 12,
         marginLeft: 10,
         marginRight: 10,
+        // margin: 5,
       }}
     />
   );
 };
 
+const RenderInputToolbar = props => (
+  <InputToolbar
+    {...props}
+    containerStyle={{
+      paddingTop: 3,
+      paddingBottom: 3,
+    }}
+    primaryStyle={{ alignItems: 'center' }}
+  />
+);
+
 const Chat = ({ messages, _handleMessageSend }) => {
   const theme = useContext(ThemeContext);
   const { uid, name, photoUrl } = getCurrentUser();
-  const DEFAULT_TABBAR_HEIGHT = Platform.OS === 'ios' ? 43 : 0;
+  const DEFAULT_TABBAR_HEIGHT = Platform.OS === 'ios' ? 35 : 0;
 
   return (
     <Container>
@@ -117,6 +130,7 @@ const Chat = ({ messages, _handleMessageSend }) => {
         renderComposer={props => <RenderComposer {...props} />}
         scrollToBottom={true}
         renderSend={props => <SendButton {...props} />}
+        renderInputToolbar={props => <RenderInputToolbar {...props} />}
         bottomOffset={DEFAULT_TABBAR_HEIGHT + getBottomSpace()}
         renderAvatar={null}
         parsePatterns={linkStyle => [

@@ -23,6 +23,10 @@
         "NSFaceIDUsageDescription": "The app transfer money by FaceID"
       }
     },
+    "androidNavigationBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#ffffff"
+    },
     "android": {
       "package": "com.mugohan.onelinebank",
       "versionCode": 1,
@@ -30,7 +34,7 @@
       "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "backgroundColor": "#1277cb",
-        "foregroundImage": "./assets/android-icon.png"
+        "foregroundImage": "./assets/adaptive-icon.png"
       }
     },
     "web": {

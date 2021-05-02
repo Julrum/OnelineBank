@@ -187,6 +187,8 @@ const Channel = ({ navigation }) => {
           setStatus(response.status);
           setData(response.data);
         }
+      } else {
+        await createMessage({ message: bot(texts.current) });
       }
       if (status.current === 200) {
         setTexts(
@@ -247,18 +249,18 @@ const Channel = ({ navigation }) => {
     try {
       const isCompatible = await LocalAuthentication.hasHardwareAsync();
       if (!isCompatible) {
-        throw new Error("Your device isn't compatible.");
+        setTexts('인증에 실패하였습니다.');
       }
 
       const isEnrolled = await LocalAuthentication.isEnrolledAsync();
       if (!isEnrolled) {
-        throw new Error('No Faces / Fingers found.');
+        setTexts('인증에 실패하였습니다.');
       }
 
       const result = await LocalAuthentication.authenticateAsync();
       return result;
     } catch (error) {
-      Alert.alert('An error as occured', error?.message);
+      Alert.alert('인증에 실패하였습니다.', error?.message);
     }
   };
 

@@ -122,7 +122,7 @@ const AccountCreation = ({ navigation }) => {
         />
         <ErrorText>{errorMessage}</ErrorText>
         <Button
-          title="계정생성"
+          title="계좌추가"
           onPress={_handleCreateButtonPress}
           disabled={disabled}
         />

@@ -28,7 +28,7 @@ const MainTab = ({ navigation, route }) => {
             name="add"
             size={26}
             style={{ margin: 10 }}
-            onPress={() => navigation.navigate('계정생성')}
+            onPress={() => navigation.navigate('계좌추가')}
           />
         ),
     });

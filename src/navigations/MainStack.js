@@ -21,7 +21,7 @@ const MainStack = () => {
     >
       <Stack.Screen name="한줄뱅크" component={MainTab} />
       <Stack.Screen name="채팅" component={Channel} />
-      <Stack.Screen name="계정생성" component={AccountCreation} />
+      <Stack.Screen name="계좌추가" component={AccountCreation} />
       <Stack.Screen name="주소록" component={AccountList} />
     </Stack.Navigator>
   );
