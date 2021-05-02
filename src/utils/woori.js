@@ -1,7 +1,7 @@
-import getEnvVars from '../../environment';
 import axios from 'axios';
 
-const { apiKey, apiUrl } = getEnvVars();
+const apiKey = 'l7xxcD4QVD4iKSerVX01i3fuh4CyK7zQ0rDs';
+const apiUrl = 'https://openapi.wooribank.com:444';
 
 export const transferWoori = async ({ fromAccount, money, toAccount, txt }) => {
   try {

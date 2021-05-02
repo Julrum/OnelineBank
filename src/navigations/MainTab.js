@@ -4,6 +4,14 @@ import { Profile, Channel, AccountList } from '../screens';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ThemeContext } from 'styled-components/native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
+import {
+  Account,
+  AccountActivity,
+  Chat,
+  ChatActivity,
+  Profiles,
+  ProfileActivity,
+} from '../components/icon';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,11 +56,7 @@ const MainTab = ({ navigation, route }) => {
         name="Channels"
         component={Channel}
         options={{
-          tabBarIcon: ({ focused }) =>
-            TabBarIcon({
-              focused,
-              name: focused ? 'chat-bubble' : 'chat-bubble-outline',
-            }),
+          tabBarIcon: ({ focused }) => (focused ? <ChatActivity /> : <Chat />),
         }}
       />
       <Tab.Screen
@@ -60,10 +64,7 @@ const MainTab = ({ navigation, route }) => {
         component={AccountList}
         options={{
           tabBarIcon: ({ focused }) =>
-            TabBarIcon({
-              focused,
-              name: focused ? 'people' : 'people-outline',
-            }),
+            focused ? <AccountActivity /> : <Account />,
         }}
       />
       <Tab.Screen
@@ -71,10 +72,7 @@ const MainTab = ({ navigation, route }) => {
         component={Profile}
         options={{
           tabBarIcon: ({ focused }) =>
-            TabBarIcon({
-              focused,
-              name: focused ? 'person' : 'person-outline',
-            }),
+            focused ? <ProfileActivity /> : <Profiles />,
         }}
       />
     </Tab.Navigator>

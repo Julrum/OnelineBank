@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="26" height="26" viewBox="0 0 26 26">
+  <defs>
+    <filter id="사각형_7" x="-30" y="8" width="86" height="79" filterUnits="userSpaceOnUse">
+      <feOffset dy="40" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-chat_activity">
+      <rect width="26" height="26"/>
+    </clipPath>
+  </defs>
+  <g id="chat_activity" class="cls-1" style="clip-path: url(#clip-chat_activity);">
+    <g class="cls-3" transform="matrix(1, 0, 0, 1, 0, 0)" style="filter: url(#사각형_7);">
+      <path id="사각형_7-2" data-name="사각형 7" class="cls-2" d="M0,0H21.5A4.5,4.5,0,0,1,26,4.5v0A4.5,4.5,0,0,1,21.5,9H4.5A4.5,4.5,0,0,1,0,4.5V0A0,0,0,0,1,0,0Z" transform="translate(26 17) rotate(180)" style="fill: #08090a;"/>
+    </g>
+  </g>
+</svg>

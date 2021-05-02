@@ -7,6 +7,7 @@ const colors = {
   grey_4: '#767676', // font color
   grey_5: '#ededed', // line color
   grey_6: '#dbdbdb', // line color
+  grey: '#e5e7e9',
   danger: '#ff3120',
   primary: '#1277cb',
   secondary: '#54BEEC',
@@ -42,6 +43,7 @@ export const theme = {
   sendButtonActivate: colors.white,
   sendButtonInactivate: colors.grey3,
   sendButtonBG: colors.secondary,
+  sendButtonBGInactivate: colors.grey,
 
   inputBorderColor: colors.grey_6,
 

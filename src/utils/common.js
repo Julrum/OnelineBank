@@ -26,12 +26,17 @@ export const returnMoney = money => {
 };
 
 export const validateName = name => {
-  const regex = /[가-힣]+(?=에게)/;
-  return regex.test(name);
+  const regex1 = /[가-힣]+(?=에게)/;
+  const regex2 = /[가-힣]+(?=한테)/;
+  return regex1.test(name) || regex2.test(name);
 };
 export const returnName = name => {
-  const regex = /[가-힣]+(?=에게)/;
-  return name.match(regex)[0];
+  const regex1 = /[가-힣]+(?=에게)/;
+  const regex2 = /[가-힣]+(?=한테)/;
+  return (
+    (regex1.test(name) && name.match(regex1)[0]) ||
+    (regex2.test(name) && name.match(regex2)[0])
+  );
 };
 
 export const validateBankCode = code => {
@@ -60,6 +65,17 @@ export const makeId = length => {
     );
   }
   return result.join('');
+};
+
+export const findNameinAccount = (name, account, uid) => {
+  const list = [];
+  account.forEach(item => {
+    if (item.name === name && item.uid === uid) {
+      list.push(item.bank);
+      list.push(item.account);
+    }
+  });
+  return list;
 };
 
 export const particle = ['/[가-힣]+(?=에게)/', '/[가-힣]+(?=한테)/'];

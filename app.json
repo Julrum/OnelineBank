@@ -26,7 +26,7 @@
       "package": "com.mugohan.mugohanchat",
       "versionCode": 1,
       "permissions": ["CAMERA"],
-      "icon": "./assets/android-icon.png",
+      "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "backgroundColor": "#1277cb",
         "foregroundImage": "./assets/android-icon.png"

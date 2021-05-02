@@ -17,6 +17,7 @@ import {
   validateBankCode,
   returnName,
   validateName,
+  findNameinAccount,
 } from '../utils/common';
 import { ProgressContext } from '../contexts';
 import { Chat } from '../components';
@@ -105,20 +106,28 @@ const Channel = ({ navigation }) => {
 
   const findAccount = text => {
     const list = [];
-    let message = '';
+    let _message = '';
     setInfo([]);
     if (validateName(text)) {
       console.log(returnName(text));
-      list.push(returnName(text));
-      message += `${returnName(text)}에게`;
-      console.log(message);
+      const isThereName = findNameinAccount(returnName(text), accounts, uid);
+      if (isThereName[0] !== undefined && isThereName[1] !== undefined) {
+        list.push(isThereName[0]);
+        list.push(isThereName[1]);
+        _message += `${returnName(text)}(${isThereName[0]} ${
+          isThereName[1]
+        })에게`;
+      } else {
+        list.push(null);
+        setTexts('이름을 찾을 수가 없어요.');
+      }
     } else if (validateBankCode(text)) {
       list.push(validateBankCode(text).code);
-      message += validateBankCode(text).name;
+      _message += validateBankCode(text).name;
       if (validateAccount(text)) {
         console.log(returnAccount(text));
         list.push(returnAccount(text));
-        message += ` ${returnAccount(text)}에게`;
+        _message += ` ${returnAccount(text)}에게`;
       } else {
         list.push(null);
         setTexts('계좌를 인식하지 못했어요.\n-를 빼고 입력해보세요.');
@@ -130,11 +139,12 @@ const Channel = ({ navigation }) => {
     if (validateMoney(text)) {
       console.log(returnMoney(text));
       list.push(returnMoney(text));
-      message += ` ${returnMoney(text)}원을 보내시겠습니까?`;
+      _message += ` ${returnMoney(text)}원을 보내시겠습니까?`;
     } else {
       list.push(null);
       setTexts('금액을 인식하지 못했어요.');
     }
+    console.log(list);
 
     setInfo(list);
     if (
@@ -142,7 +152,7 @@ const Channel = ({ navigation }) => {
       info.current[1] !== null &&
       info.current[2] !== null
     ) {
-      setTexts(message);
+      setTexts(_message);
       setProgress(true);
     } else {
       setProgress(false);
@@ -150,15 +160,15 @@ const Channel = ({ navigation }) => {
   };
 
   const findAnswer = async text => {
-    if (text === '네' || text === '예') {
+    if (text === '네' || text === '예' || text === 'ㅇㅇ' || text === '그래') {
       setProgress(false);
       console.log(info.current[2]);
       if (info.current[2] === '020') {
         console.log('rere');
         const response = await transferWoori({
           fromAccount: information.account,
-          money: info.current[1],
-          toAccount: info.current[0],
+          money: info.current[2],
+          toAccount: info.current[1],
           txt: '',
         });
         console.log(response);
@@ -167,9 +177,9 @@ const Channel = ({ navigation }) => {
       } else {
         const response = await transferOther({
           fromAccount: information.account,
-          money: info.current[1],
-          bankCode: info.current[2],
-          toAccount: info.current[0],
+          money: info.current[2],
+          bankCode: info.current[0],
+          toAccount: info.current[1],
           txt: '',
         });
         setStatus(response.status);

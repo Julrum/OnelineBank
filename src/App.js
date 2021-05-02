@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, Image, LogBox } from 'react-native';
+import { StatusBar, Image, LogBox, Platform } from 'react-native';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -42,7 +42,11 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <UserProvider>
         <ProgressProvider>
-          <StatusBar barStyle="dark-content" />
+          {Platform.OS === 'ios' ? (
+            <StatusBar barStyle="dark-content" />
+          ) : (
+            <StatusBar />
+          )}
           <Navigation />
         </ProgressProvider>
       </UserProvider>

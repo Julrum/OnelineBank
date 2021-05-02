@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="26" height="26" viewBox="0 0 26 26">
+  <defs>
+
+    <clipPath id="clip-account_activity">
+      <rect width="26" height="26"/>
+    </clipPath>
+  </defs>
+  <g id="account_activity" class="cls-1" style="clip-path: url(#clip-account_activity)">
+    <rect class="cls-8" width="26" height="26" style="fill: #fff"/>
+    <rect id="사각형_11" data-name="사각형 11" class="cls-2" width="26" height="18" rx="4" transform="translate(0 4)" style="fill: #08090a"/>
+    <line id="선_1" data-name="선 1" class="cls-3" x2="26" transform="translate(0 8.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_2" data-name="선 2" class="cls-3" y2="4" transform="translate(5.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_4" data-name="선 4" class="cls-3" y2="4" transform="translate(2.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_5" data-name="선 5" class="cls-3" y2="4" transform="translate(3.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_6" data-name="선 6" class="cls-3" y2="4" transform="translate(7.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_7" data-name="선 7" class="cls-3" y2="4" transform="translate(8.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_8" data-name="선 8" class="cls-3" y2="4" transform="translate(10.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_9" data-name="선 9" class="cls-3" y2="4" transform="translate(11.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <line id="선_10" data-name="선 10" class="cls-3" y2="4" transform="translate(13.5 10.5)" style="fill: none; stroke: #fff;"/>
+    <g id="타원_1" data-name="타원 1" class="cls-3" transform="translate(17 11)" style="fill: none; stroke: #fff;">
+      <circle class="cls-5" cx="2" cy="2" r="2" style="stroke: none"/>
+      <circle class="cls-6" cx="2" cy="2" r="1.5" style="fill: none"/>
+    </g>
+    <g id="패스_2" data-name="패스 2" class="cls-4" transform="translate(15 14)" style="fill: none">
+      <path class="cls-5" d="M4,0A4,4,0,0,1,8,4C8,6.209,0,6.209,0,4A4,4,0,0,1,4,0Z" style="stroke: none"/>
+      <path class="cls-7" d="M 4 0.9999995231628418 C 2.356492519378662 0.9999995231628418 1.017428398132324 2.328357219696045 1.000170230865479 3.967856884002686 C 1.160656929016113 4.184645175933838 2.18625545501709 4.656849384307861 4 4.656849384307861 C 5.81374454498291 4.656849384307861 6.839343070983887 4.184645175933838 6.999829292297363 3.967856884002686 C 6.982571601867676 2.328357219696045 5.643507957458496 0.9999995231628418 4 0.9999995231628418 M 4 -4.76837158203125e-07 C 6.209139823913574 -4.76837158203125e-07 8 1.790859222412109 8 3.999999523162842 C 8 5.104569435119629 6 5.656854629516602 4 5.656854629516602 C 2 5.656854629516602 0 5.104569435119629 0 3.999999523162842 C 0 1.790859222412109 1.790860176086426 -4.76837158203125e-07 4 -4.76837158203125e-07 Z" style="fill: #fff;stroke: none"/>
+    </g>
+  </g>
+</svg>

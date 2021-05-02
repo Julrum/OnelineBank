@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 import {
   Bubble,
   GiftedChat,
   Send,
   InputToolbar,
+  Composer,
 } from 'react-native-gifted-chat';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -24,10 +25,12 @@ const SendButton = props => {
       {...props}
       disabled={!props.text}
       containerStyle={{
-        width: 50,
+        width: 34,
         height: 34,
-        backgroundColor: theme.sendButtonBG,
-        borderRadius: 10,
+        backgroundColor: props.text
+          ? theme.sendButtonBG
+          : theme.sendButtonBGInactivate,
+        borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 4,
@@ -49,6 +52,7 @@ const RenderBubble = props => {
   return (
     <Bubble
       {...props}
+      renderUsernameOnMessage={false}
       wrapperStyle={{
         left: {
           borderColor: theme.botBubbleBorder,
@@ -65,20 +69,22 @@ const RenderBubble = props => {
   );
 };
 
-const RenderInputToolbar = props => {
+const RenderComposer = props => {
   const theme = useContext(ThemeContext);
   return (
-    <InputToolbar
+    <Composer
       {...props}
-      containerStyle={{
-        borderRadius: 10,
+      multiline={true}
+      placeholder=""
+      textInputStyle={{
         borderWidth: 1,
+        borderRadius: 20,
         borderColor: theme.inputBorderColor,
-        marginLeft: 2,
-        marginRight: 2,
-        paddintTop: 6,
+        paddingTop: 8.5,
+        paddingHorizontal: 12,
+        marginLeft: 10,
+        marginRight: 10,
       }}
-      primaryStyle={{ alignItems: 'center' }}
     />
   );
 };
@@ -108,15 +114,16 @@ const Chat = ({ messages, _handleMessageSend }) => {
         multiline={false}
         renderUsernameOnMessage={true}
         renderBubble={props => <RenderBubble {...props} />}
-        renderInputToolbar={props => <RenderInputToolbar {...props} />}
+        renderComposer={props => <RenderComposer {...props} />}
         scrollToBottom={true}
         renderSend={props => <SendButton {...props} />}
         bottomOffset={DEFAULT_TABBAR_HEIGHT + getBottomSpace()}
+        renderAvatar={null}
         parsePatterns={linkStyle => [
           {
-            pattern: /\@(\w+)/,
+            pattern: /[가-힣]+(?=에게)/,
             style: linkStyle,
-            onPress: tag => console.log(`Pressed on hashtag: ${tag}`),
+            onPress: tag => console.log(`Pressed on name: ${tag}`),
           },
           {
             pattern: /\d{11,14}/,
