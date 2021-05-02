@@ -19,13 +19,14 @@
       "buildNumber": "1.0.0",
       "supportsTablet": false,
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "The app accesses to photo library to upload your profile photo when you are signing up or updating the profile."
+        "NSPhotoLibraryUsageDescription": "The app accesses to photo library to upload your profile photo when you are signing up or updating the profile.",
+        "NSFaceIDUsageDescription": "The app transfer money by FaceID"
       }
     },
     "android": {
       "package": "com.mugohan.onelinebank",
       "versionCode": 1,
-      "permissions": ["CAMERA"],
+      "permissions": ["CAMERA", "USE_BIOMETIRC", "USE_FINGERPRINT"],
       "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "backgroundColor": "#1277cb",

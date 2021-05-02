@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from 'react';
 import { Alert } from 'react-native';
+import * as LocalAuthentication from 'expo-local-authentication';
 import { DB, createMessage, getCurrentUser } from '../utils/firebase';
 import { transferOther, transferWoori } from '../utils/woori';
 import {
@@ -163,34 +164,39 @@ const Channel = ({ navigation }) => {
       text === 'ㅇ' ||
       text === '그래'
     ) {
-      setProgress(false);
-      if (info.current[2] === '020') {
-        const response = await transferWoori({
-          fromAccount: information.account,
-          money: info.current[2],
-          toAccount: info.current[1],
-          txt: '',
-        });
-        setStatus(response.status);
-        setData(response.data);
-      } else {
-        const response = await transferOther({
-          fromAccount: information.account,
-          money: info.current[2],
-          bankCode: info.current[0],
-          toAccount: info.current[1],
-          txt: '',
-        });
-        setStatus(response.status);
-        setData(response.data);
+      const authentication = await onFaceId();
+      if (authentication.success) {
+        setProgress(false);
+        if (info.current[2] === '020') {
+          const response = await transferWoori({
+            fromAccount: information.account,
+            money: info.current[2],
+            toAccount: info.current[1],
+            txt: '',
+          });
+          setStatus(response.status);
+          setData(response.data);
+        } else {
+          const response = await transferOther({
+            fromAccount: information.account,
+            money: info.current[2],
+            bankCode: info.current[0],
+            toAccount: info.current[1],
+            txt: '',
+          });
+          setStatus(response.status);
+          setData(response.data);
+        }
       }
-
       if (status.current === 200) {
         setTexts(
           `이체를 완료하였습니다.\n계좌: ${information.account}\n예금주: ${data.current.dataBody.OWAC_FNM}\n수취인: ${data.current.dataBody.RNPE_FNM}\n잔액: ${data.current.dataBody.BFTR_AF_BAL}\n수수료금액: ${data.current.dataBody.FEE_Am}`
         );
+        setStatus(404);
+        setProgress(false);
       } else {
-        setTexts(`${status.current}\n이체에 실패했습니다.`);
+        setTexts('이체에 실패했습니다.');
+        setProgress(false);
       }
     } else if (
       text === '아니오' ||
@@ -234,6 +240,25 @@ const Channel = ({ navigation }) => {
       Alert.alert('Send Message Error', e.message);
     } finally {
       spinner.stop();
+    }
+  };
+
+  const onFaceId = async () => {
+    try {
+      const isCompatible = await LocalAuthentication.hasHardwareAsync();
+      if (!isCompatible) {
+        throw new Error("Your device isn't compatible.");
+      }
+
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (!isEnrolled) {
+        throw new Error('No Faces / Fingers found.');
+      }
+
+      const result = await LocalAuthentication.authenticateAsync();
+      return result;
+    } catch (error) {
+      Alert.alert('An error as occured', error?.message);
     }
   };
 

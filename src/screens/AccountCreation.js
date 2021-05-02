@@ -113,7 +113,6 @@ const AccountCreation = ({ navigation }) => {
           onChangeText={text => setAccount(text)}
           onSubmitEditing={() => {
             setAccount(account.trim());
-            _handleCreateButtonPress();
           }}
           onBlur={() => setAccount(account.trim())}
           placeholder="계좌번호를 입력해주세요."
