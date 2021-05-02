@@ -127,6 +127,7 @@ const Signup = () => {
           onChangeText={text => setAccount(removeWhitespace(text))}
           onSubmitEditing={() => emailRef.current.focus()}
           placeholder="Account"
+          keyType="numeric"
           returnKeyType="next"
         />
         <Input
@@ -136,6 +137,7 @@ const Signup = () => {
           onChangeText={text => setEmail(removeWhitespace(text))}
           onSubmitEditing={() => passwordRef.current.focus()}
           placeholder="Email"
+          keyType="email-address"
           returnKeyType="next"
         />
         <Input

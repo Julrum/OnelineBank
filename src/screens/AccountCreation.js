@@ -99,7 +99,7 @@ const AccountCreation = ({ navigation }) => {
           onChangeText={text => setBank(removeWhitespace(text))}
           onSubmitEditing={() => {
             setBank(bank.trim());
-            () => accountRef.current.focus();
+            accountRef.current.focus();
           }}
           onBlur={() => setBank(bank.trim())}
           placeholder="Bank name"
@@ -117,6 +117,7 @@ const AccountCreation = ({ navigation }) => {
           }}
           onBlur={() => setAccount(account.trim())}
           placeholder="Account"
+          keyType="numeric"
           returnKeyType="done"
           maxLength={20}
         />

@@ -39,6 +39,7 @@ const Input = forwardRef(
       returnKeyType,
       maxLength,
       disabled,
+      keyType,
     },
     ref
   ) => {
@@ -67,6 +68,7 @@ const Input = forwardRef(
           textContentType="none" // ios only
           underlineColorAndroid="transparent" // Android only
           editable={!disabled}
+          keyboardType={keyType}
         />
       </Container>
     );
@@ -90,6 +92,7 @@ Input.propTypes = {
   returnKeyType: PropTypes.oneOf(['done', 'next']),
   maxLength: PropTypes.number,
   disabled: PropTypes.bool,
+  keytype: PropTypes.string,
 };
 
 export default Input;

@@ -78,6 +78,7 @@ const Login = ({ navigation }) => {
           onChangeText={_handleEmailChange}
           onSubmitEditing={_handleLoginButtonPress}
           placeholder="Email"
+          keyType="email-address"
           returnKeyType="next"
         />
         <Input
