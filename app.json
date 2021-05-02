@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Mugohan Chat",
-    "slug": "mugohanchat",
+    "name": "한줄뱅크",
+    "slug": "onelinebank",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +15,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "com.mugohan.mugohanchat",
+      "bundleIdentifier": "com.mugohan.onelinebank",
       "buildNumber": "1.0.0",
       "supportsTablet": false,
       "infoPlist": {
@@ -23,7 +23,7 @@
       }
     },
     "android": {
-      "package": "com.mugohan.mugohanchat",
+      "package": "com.mugohan.onelinebank",
       "versionCode": 1,
       "permissions": ["CAMERA"],
       "icon": "./assets/icon.png",

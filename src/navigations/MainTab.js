@@ -15,17 +15,6 @@ import {
 
 const Tab = createBottomTabNavigator();
 
-const TabBarIcon = ({ focused, name }) => {
-  const theme = useContext(ThemeContext);
-  return (
-    <MaterialIcons
-      name={name}
-      size={26}
-      color={focused ? theme.tabActiveColor : theme.tabInactiveColor}
-    />
-  );
-};
-
 const MainTab = ({ navigation, route }) => {
   const theme = useContext(ThemeContext);
 
@@ -34,12 +23,12 @@ const MainTab = ({ navigation, route }) => {
     navigation.setOptions({
       headerTitle: routeName,
       headerRight: () =>
-        routeName === 'Account' && (
+        routeName === '주소록' && (
           <MaterialIcons
             name="add"
             size={26}
             style={{ margin: 10 }}
-            onPress={() => navigation.navigate('Account Creation')}
+            onPress={() => navigation.navigate('계정생성')}
           />
         ),
     });
@@ -53,14 +42,14 @@ const MainTab = ({ navigation, route }) => {
       }}
     >
       <Tab.Screen
-        name="Channels"
+        name="채팅"
         component={Channel}
         options={{
           tabBarIcon: ({ focused }) => (focused ? <ChatActivity /> : <Chat />),
         }}
       />
       <Tab.Screen
-        name="Account"
+        name="주소록"
         component={AccountList}
         options={{
           tabBarIcon: ({ focused }) =>
@@ -68,7 +57,7 @@ const MainTab = ({ navigation, route }) => {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="내 정보"
         component={Profile}
         options={{
           tabBarIcon: ({ focused }) =>

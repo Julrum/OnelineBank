@@ -43,11 +43,11 @@ const AccountCreation = ({ navigation }) => {
     if (didMountRef.current) {
       let _errorMessage = '';
       if (!name) {
-        _errorMessage = 'Please enter name.';
+        _errorMessage = '이름을 입력해주세요.';
       } else if (!validateAccount(account)) {
-        _errorMessage = 'Please verify account.';
+        _errorMessage = '올바른 이메일 형식이 아닙니다.';
       } else if (!validateBankCode(bank)) {
-        _errorMessage = 'Please verify bank name.';
+        _errorMessage = '올바른 은행을 입력해주세요.';
       } else {
         _errorMessage = '';
       }
@@ -67,7 +67,7 @@ const AccountCreation = ({ navigation }) => {
       await createAccount({ name, bank, account, uid });
       navigation.goBack();
     } catch (e) {
-      Alert.alert('Creation Error', e.message);
+      Alert.alert('생성 오류', e.message);
     } finally {
       spinner.stop();
     }
@@ -80,7 +80,7 @@ const AccountCreation = ({ navigation }) => {
     >
       <Container>
         <Input
-          label="Name"
+          label="이름"
           value={name}
           onChangeText={text => setName(text)}
           onSubmitEditing={() => {
@@ -88,13 +88,13 @@ const AccountCreation = ({ navigation }) => {
             bankRef.current.focus();
           }}
           onBlur={() => setName(name.trim())}
-          placeholder="Name"
+          placeholder="이름을 입력해주세요."
           returnKeyType="next"
           maxLength={10}
         />
         <Input
           ref={bankRef}
-          label="Bank name"
+          label="은행"
           value={bank}
           onChangeText={text => setBank(removeWhitespace(text))}
           onSubmitEditing={() => {
@@ -102,13 +102,13 @@ const AccountCreation = ({ navigation }) => {
             accountRef.current.focus();
           }}
           onBlur={() => setBank(bank.trim())}
-          placeholder="Bank name"
+          placeholder="은행을 입력해주세요."
           returnKeyType="next"
           maxLength={10}
         />
         <Input
           ref={accountRef}
-          label="Account"
+          label="계좌번호"
           value={account}
           onChangeText={text => setAccount(text)}
           onSubmitEditing={() => {
@@ -116,14 +116,14 @@ const AccountCreation = ({ navigation }) => {
             _handleCreateButtonPress();
           }}
           onBlur={() => setAccount(account.trim())}
-          placeholder="Account"
+          placeholder="계좌번호를 입력해주세요."
           keyType="numeric"
           returnKeyType="done"
           maxLength={20}
         />
         <ErrorText>{errorMessage}</ErrorText>
         <Button
-          title="Create"
+          title="계정생성"
           onPress={_handleCreateButtonPress}
           disabled={disabled}
         />

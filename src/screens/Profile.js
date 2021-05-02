@@ -38,7 +38,7 @@ const Profile = () => {
       spinner.start();
       await logout();
     } catch (e) {
-      console.log('[Profile] logout: ', e.message);
+      console.log('[내 정보] 로그아웃: ', e.message);
     } finally {
       dispatch({});
       spinner.stop();
@@ -51,7 +51,7 @@ const Profile = () => {
       const updateUser = await updateUserPhoto(url);
       setPhotoUrl(updateUser.photoUrl);
     } catch (e) {
-      Alert.alert('Photo Error', e.message);
+      Alert.alert('사진 첨부 오류 발생', e.message);
     } finally {
       spinner.stop();
     }
@@ -65,11 +65,11 @@ const Profile = () => {
         showButton
         rounded
       />
-      <Input label="Name" value={user.name} disabled />
-      <Input label="Email" value={user.email} disabled />
-      <Input label="Account" value={information.account} disabled />
+      <Input label="이름" value={user.name} disabled />
+      <Input label="이메일" value={user.email} disabled />
+      <Input label="계좌번호" value={information.account} disabled />
       <Button
-        title="logout"
+        title="로그아웃"
         onPress={_handleLogoutButtonPress}
         containerStyle={{ marginTop: 30, backgroundColor: theme.buttonLogout }}
       />

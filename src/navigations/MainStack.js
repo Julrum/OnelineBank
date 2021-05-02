@@ -11,7 +11,7 @@ const MainStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="Chat"
+      initialRouteName="한줄뱅크"
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: theme.headerTintColor,
@@ -19,10 +19,10 @@ const MainStack = () => {
         headerBackTitleVisible: false,
       }}
     >
-      <Stack.Screen name="Chat" component={MainTab} />
-      <Stack.Screen name="Channel" component={Channel} />
-      <Stack.Screen name="Account Creation" component={AccountCreation} />
-      <Stack.Screen name="Account List" component={AccountList} />
+      <Stack.Screen name="한줄뱅크" component={MainTab} />
+      <Stack.Screen name="채팅" component={Channel} />
+      <Stack.Screen name="계정생성" component={AccountCreation} />
+      <Stack.Screen name="주소록" component={AccountList} />
     </Stack.Navigator>
   );
 };

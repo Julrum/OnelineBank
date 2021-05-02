@@ -46,7 +46,7 @@ const Login = ({ navigation }) => {
     const changedEmail = removeWhitespace(email);
     setEmail(changedEmail);
     setErrorMessage(
-      validateEmail(changedEmail) ? '' : 'Please verify your email.'
+      validateEmail(changedEmail) ? '' : '이메일 형식을 확인해주세요.'
     );
   };
   const _handlePasswordChange = password => {
@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
       const user = await login({ email, password });
       dispatch(user);
     } catch (e) {
-      Alert.alert('Login Error', e.message);
+      Alert.alert('로그인 오류 발생', e.message);
     } finally {
       spinner.stop();
     }
@@ -73,33 +73,33 @@ const Login = ({ navigation }) => {
       <Container insets={insets}>
         <Image url={images.logo} imageStyle={{ borderRadius: 30 }} />
         <Input
-          label="Email"
+          label="이메일"
           value={email}
           onChangeText={_handleEmailChange}
           onSubmitEditing={_handleLoginButtonPress}
-          placeholder="Email"
+          placeholder="이메일을 입력해주세요."
           keyType="email-address"
           returnKeyType="next"
         />
         <Input
           ref={passwordRef}
-          label="Password"
+          label="비밀번호"
           value={password}
           onChangeText={_handlePasswordChange}
           onSubmitEditing={() => {}}
-          placeholder="Password"
+          placeholder="비밀번호를 입력해주세요."
           returnKeyType="done"
           isPassword
         />
         <ErrorText>{errorMessage}</ErrorText>
         <Button
-          title="Login"
+          title="로그인"
           onPress={_handleLoginButtonPress}
           disabled={disabled}
         />
         <Button
-          title="Sign up with email"
-          onPress={() => navigation.navigate('Signup')}
+          title="회원가입"
+          onPress={() => navigation.navigate('회원가입')}
           isFilled={false}
         />
       </Container>

@@ -9,7 +9,7 @@ const AuthStack = () => {
   const theme = useContext(ThemeContext);
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="로그인"
       screenOptions={{
         headerTitleAlign: 'center',
         cardStyle: { backgroundColor: theme.backgroundColor },
@@ -17,12 +17,12 @@ const AuthStack = () => {
       }}
     >
       <Stack.Screen
-        name="Login"
+        name="로그인"
         component={Login}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Signup"
+        name="회원가입"
         component={Signup}
         options={{ headerBackTitleVisible: false }}
       />
