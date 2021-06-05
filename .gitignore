@@ -16,3 +16,5 @@ web-build/
 firebase.json
 
 environment.js
+
+yarn.lock
